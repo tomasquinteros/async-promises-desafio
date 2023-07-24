@@ -7,7 +7,7 @@ class Contact {
 
 class ContactsCollection {
   data: Contact[] = []
-  async load(): Promise<any> {
+  async load() {
     const promise = jsonfile.readFile(__dirname + "/contacts.json")
     const json = await promise
     this.data = json
@@ -21,7 +21,7 @@ class ContactsCollection {
   save(): Promise<any> {
     return jsonfile.writeFile(__dirname + "/contacts.json", this.data)
   }
-  getOneById(id) {
+  getOneById(id: number) {
     const encontrado = this.data.find((contacto) => {
       if (contacto?.id == id) {
         return true
