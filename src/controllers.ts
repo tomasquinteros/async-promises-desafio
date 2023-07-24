@@ -1,27 +1,29 @@
-import { ContactsCollection, Contact } from "./models";
+import { ContactsCollection, Contact } from "./models"
 
 export class ContactsControllerOptions {
-  action: "get" | "save";
-  params: Contact;
+  action: "get" | "save"
+  params: Contact
 }
 
 class ContactsController {
-  contacts: ContactsCollection;
+  contacts: ContactsCollection
+  promise: Promise<any>
   constructor() {
-    this.contacts = new ContactsCollection();
-    this.contacts.load();
+    this.contacts = new ContactsCollection()
+    const promise = this.contacts.load()
+    this.promise = promise 
   }
   processOptions(options: ContactsControllerOptions) {
-    var resultado;
+    var resultado
     if (options.action == "get" && options.params.id) {
-      resultado = this.contacts.getOneById(options.params.id);
+      resultado = this.contacts.getOneById(options.params.id)
     } else if (options.action == "get") {
-      resultado = this.contacts.getAll();
+      resultado = this.contacts.getAll()
     } else if (options.action == "save" && options.params) {
-      this.contacts.addOne(options.params);
-      this.contacts.save();
+      this.contacts.addOne(options.params)
+      this.contacts.save()
     }
-    return resultado;
+    return resultado
   }
 }
-export { ContactsController };
+export { ContactsController }

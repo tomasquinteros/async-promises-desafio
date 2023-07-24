@@ -1,35 +1,34 @@
-import * as jsonfile from "jsonfile";
+import * as jsonfile from "jsonfile"
 
 class Contact {
-  id?: number = undefined;
-  name: string = "";
+  id?: number = undefined
+  name: string = ""
 }
 
 class ContactsCollection {
-  data: Contact[] = [];
-  load() {
-    // usar la version Async (readFile)
-    const json = jsonfile.readFileSync(__dirname + "/contacts.json");
-    this.data = json;
+  data: Contact[] = []
+  async load(): Promise<any> {
+    const promise = jsonfile.readFile(__dirname + "/contacts.json")
+    const json = await promise
+    this.data = json
   }
   getAll() {
-    return this.data;
+    return this.data
   }
   addOne(contact: Contact) {
-    this.data.push(contact);
+    this.data.push(contact)
   }
-  save() {
-    // usar la version Async (writeFIle)
-    jsonfile.writeFileSync(__dirname + "/contacts.json", this.data);
+  save(): Promise<any> {
+    return jsonfile.writeFile(__dirname + "/contacts.json", this.data)
   }
   getOneById(id) {
     const encontrado = this.data.find((contacto) => {
       if (contacto?.id == id) {
-        return true;
+        return true
       }
-    });
+    })
 
-    return encontrado;
+    return encontrado
   }
 }
-export { ContactsCollection, Contact };
+export { ContactsCollection, Contact }
